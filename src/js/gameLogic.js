@@ -14,28 +14,50 @@
 
     4.3 [x] If the letter isn’t in correct at all → add { letter: X, result: "incorrect" }.
 
-    4.4 [] Some kind of logic for this example:
+    4.4 [x] Some kind of logic for this example:
         "If the target word contains a letter multiple times, but the user guesses that letter more times than it appears, 
         the extra occurrences should be marked as "incorrect."
 
 [] Return the result array as the output of the function. */
 
-function evaluateGuess(correct, guess) {
-    let correctArray = correct.toLowerCase().split('');
-    let guessArray = guess.toLowerCase().split('');
+export function evaluateGuess(correct, guess) {
+    let correctArray = correct.toUpperCase().split('');
+    let guessArray = guess.toUpperCase().split('');
     let result = [];
+    let correctLetterCount = [];
 
-    for (let i = 0; i < correctArray.length; i++) {
-        if (correctArray[i] === guessArray[i]) {
+    if (correctArray.length !== guessArray.length) {
+        console.log('Your word was ' + guessArray.length + ' characters long');
+        console.log('The correct word is ' + correctArray.length + ' characters long, try again!');
+        return;
+    }
+
+    let remainingCorrectLetters = [...correctArray];
+
+    for (let i = 0; i < guessArray.length; i++) {
+
+        if (guessArray[i] === correctArray[i]) {
             result.push({ letter: guessArray[i], result: 'correct' });
-        } else if (correctArray[i] !== guessArray[i] && correctArray.includes(guessArray[i])) {
-            result.push({ letter: guessArray[i], result: 'misplaced' });
+            correctLetterCount.push(i);
+            remainingCorrectLetters[i] = null;
+
         } else {
             result.push({ letter: guessArray[i], result: 'incorrect' });
         }
     }
 
-    console.log(result);
-};
+    for (let i = 0; i < guessArray.length; i++) {
+        if (result[i].result === 'incorrect') {
+            let index = remainingCorrectLetters.indexOf(guessArray[i]);
+            if (index !== -1) {
+                result[i].result = 'misplaced';
+                remainingCorrectLetters[index] = null;
+            }
+        }
+    }
 
-evaluateGuess("Hallå", "Allla");
+    console.log(result);
+    console.log(correctLetterCount);
+}
+
+evaluateGuess("Trrer", "Raarr");
