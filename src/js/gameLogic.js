@@ -18,7 +18,7 @@
         "If the target word contains a letter multiple times, but the user guesses that letter more times than it appears, 
         the extra occurrences should be marked as "incorrect."
 
-[] Return the result array as the output of the function. */
+[x] Return the result array as the output of the function. */
 
 export function evaluateGuess(correct, guess) {
     let correctArray = correct.toUpperCase().split('');
@@ -58,6 +58,8 @@ export function evaluateGuess(correct, guess) {
 
     console.log(result);
     console.log(correctLetterCount);
+
+    return result;
 }
 
-evaluateGuess("Trrer", "Raarr");
+evaluateGuess("CYKLA", "HALLÅ");
