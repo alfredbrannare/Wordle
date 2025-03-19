@@ -1,8 +1,34 @@
 import { it, describe, expect } from '@jest/globals';
-
 import { evaluateGuess } from "./gameLogic.js";
 
+/**
+ * Test strategy for the evaluteGuess-function:
+ * 1. Handling Different Lengths
+ * - Tests that the function returns an appropriate message if the inputs have different lengths.
+ *   For example typing 'Hejsan' when the correct word is 'Hej' the message should contain: 
+ *   -'Your word is 6 characters long, but the correct word is 3 characters long, try again!'
+ * 
+ * 2. Handling inputs
+ * - Tests that the function correctly identifies correct, misplaced and incorrect letters.
+ *   For example 'HJA' should contain:
+ *   - H as correct
+ *   - J as misplaced
+ *   - A as incorrect
+ * 
+ * 3. Handling duplicate letters
+ * - Tests that the function handles cases where a letter appears more times in the guess than in the correct word.
+ *   Example: Guessing "Maaa" against the correct word "Mama" should mark the extra 'A's as incorrect.
+ * 
+ * 4. Case insensitivity:
+ * - Tests that the function is case-insensitive, meaning it ignores uppercase and lowercase differences.
+ *   For example guessing "hello" against the correct word "HeLLo" should mark all letters as correct.
+ * 5. Empty strings
+ * - Test that the function handles empty strings correctly.
+ *   For example guessing "" against the correct word "" should return an empty array.
+ */
+
 describe('evaluateGuess function', () => {
+    // Test 1: Handling if the inputs have different lengths
     it('displays a message if the guess input is not the same length as the correct input', () => {
         const correctWord = 'Hej';
         const guessWord = 'Hejsan';
@@ -14,18 +40,7 @@ describe('evaluateGuess function', () => {
         expect(result).toEqual(expectedResult);
     });
 
-    it('returns the correct, misplaced, and incorrect results for a guess', () => {
-        const result = evaluateGuess('Hej', 'Hja');
-
-        const expectedResult = [
-            { letter: 'H', result: 'correct'},
-            { letter: 'J', result: 'misplaced'},
-            { letter: 'A', result: 'incorrect'},
-        ];
-
-        expect(result).toEqual(expectedResult);
-    });
-
+    // Test 2: Handling inputs
     it.each([
         ['Hej', 'Hej', [
             { letter: 'H', result: 'correct' },
@@ -52,6 +67,7 @@ describe('evaluateGuess function', () => {
         expect(result).toEqual(expectedResult);
     });
 
+    // Test 3: Handling duplicate letters
     it('marks extra occurrences of a letter as incorrect when the correct word has fewer instances', () => {
         const result = evaluateGuess('Mama', 'Maaa');
     
@@ -65,6 +81,7 @@ describe('evaluateGuess function', () => {
         expect(result).toEqual(expectedResult);
     });
 
+    // Test 4: Case insensitivity
     it('is case insensitive when comparing letters', () => {
         const result = evaluateGuess('HeLLo', 'hello');
     
@@ -79,6 +96,7 @@ describe('evaluateGuess function', () => {
         expect(result).toEqual(expectedResult);
     });
 
+    // Test 5: Empty strings
     it('handles empty strings correctly', () => {
         const result = evaluateGuess('', '');
         const expectedResult = [];
