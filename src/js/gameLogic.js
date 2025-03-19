@@ -2,7 +2,7 @@
 
 1. [x] Create a function that takes in two strings: correct (the correct word) and guess (the guessed word).
 
-2. [-] Check the length: If either of the strings is longer than 5 characters, return an error message.
+2. [x] Check the length: If guess is the same length as correct.
 
 3. Split the words into arrays of individual letters for easier iteration.
 
@@ -27,9 +27,7 @@ export function evaluateGuess(correct, guess) {
     let correctLetterCount = [];
 
     if (correctArray.length !== guessArray.length) {
-        console.log('Your word was ' + guessArray.length + ' characters long');
-        console.log('The correct word is ' + correctArray.length + ' characters long, try again!');
-        return;
+        return 'Your word is ' + guessArray.length + ' characters long, but the correct word is ' + correctArray.length + ' characters long, try again!';
     }
 
     let remainingCorrectLetters = [...correctArray];
@@ -62,4 +60,4 @@ export function evaluateGuess(correct, guess) {
     return result;
 }
 
-evaluateGuess("CYKLA", "HALLÅ");
+evaluateGuess("CYKLA", "HALLÅa");
