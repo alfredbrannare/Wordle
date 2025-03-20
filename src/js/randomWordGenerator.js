@@ -13,21 +13,39 @@ import { words } from "./wordstorage/wordData.js";
  *    Example: "A word of that length is not in the list, try again."
  */
 
-export function generateRandomWord(wordLength, words) {
+export function generateRandomWord(wordLength, words, uniqueWords) {
     if (!words || words.length === 0) {
-        return '';
-    } else if (wordLength === undefined) {
-        return 'A word of that length is not in the list, try again.'
-    } else if (!wordLength) {
+        return [];
+    }
+
+    if (wordLength === undefined && uniqueWords === undefined) {
         const randomIndex = Math.floor(Math.random() * words.length);
-        console.log(words[randomIndex]);
         return words[randomIndex];
     }
 
-    const filteredWords = words.filter((word) => word.length === wordLength);
-    const randomFilteredIndex = Math.floor(Math.random() * filteredWords.length);
+    if (wordLength !== undefined && uniqueWords === undefined) {
+        let filteredWords = words.filter((word) => word.length === wordLength);
 
-    return filteredWords.length === 0
-        ? 'A word of that length is not in the list, try again.'
-        : filteredWords[randomFilteredIndex];
+        return filteredWords.length === 0
+            ? 'A word of that length is not in the list, try again.'
+            : filteredWords[Math.floor(Math.random() * filteredWords.length)];
+    }
+
+    if (wordLength !== undefined && uniqueWords === true) {
+        let filteredWords = words.filter((word) => word.length === wordLength);
+        filteredWords = filteredWords.filter((word) => new Set(word).size === word.length);
+
+        return filteredWords.length === 0
+            ? 'A word of that length with unique letters is not in the list, try again.'
+            : filteredWords[Math.floor(Math.random() * filteredWords.length)];
+    }
+
+    if (uniqueWords === true) {
+        let filteredWords = words.filter((word) => new Set(word).size === word.length);
+        return filteredWords.length === 0
+            ? 'No words with unique letters found.'
+            : filteredWords[Math.floor(Math.random() * filteredWords.length)];
+    }
+
+    return [];
 }
