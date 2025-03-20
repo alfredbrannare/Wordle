@@ -22,6 +22,7 @@ import { evaluateGuess } from "./gameLogic.js";
  * 4. Case insensitivity:
  * - Tests that the function is case-insensitive, meaning it ignores uppercase and lowercase differences.
  *   For example guessing "hello" against the correct word "HeLLo" should mark all letters as correct.
+ * 
  * 5. Empty strings
  * - Test that the function handles empty strings correctly.
  *   For example guessing "" against the correct word "" should return an empty array.

@@ -54,9 +54,6 @@ export function evaluateGuess(correct, guess) {
         }
     }
 
-    console.log(result);
-    console.log(correctLetterCount);
-
     return result;
 }
 
