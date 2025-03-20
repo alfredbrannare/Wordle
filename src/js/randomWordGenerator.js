@@ -8,17 +8,17 @@ import { words } from "./wordstorage/wordData.js";
  * 3. [] There should be an indication whether the same letter can appear more than once, or if it has to be unique.
  * 
  * -- FUNCTION --
- * 1. [] The function chooses a random word from the list that has the same length as the number input.
- * 2. [] Some form of error message if no words exist.
- *    Example: "That word is not in the list, try again."
+ * 1. [x] The function chooses a random word from the list that has the same length as the number input.
+ * 2. [x] Some form of error message if no words exist.
+ *    Example: "A word of that length is not in the list, try again."
  */
 
 export function generateRandomWord(wordLength, words) {
     if (!words || words.length === 0) {
         return '';
-    }
-
-    if (!wordLength ) {
+    } else if (wordLength === undefined) {
+        return 'A word of that length is not in the list, try again.'
+    } else if (!wordLength) {
         const randomIndex = Math.floor(Math.random() * words.length);
         console.log(words[randomIndex]);
         return words[randomIndex];
@@ -26,5 +26,8 @@ export function generateRandomWord(wordLength, words) {
 
     const filteredWords = words.filter((word) => word.length === wordLength);
     const randomFilteredIndex = Math.floor(Math.random() * filteredWords.length);
-    return filteredWords[randomFilteredIndex];
+
+    return filteredWords.length === 0
+        ? 'A word of that length is not in the list, try again.'
+        : filteredWords[randomFilteredIndex];
 }

@@ -20,7 +20,13 @@ describe('generateRandomWord function', () => {
         const result = generateRandomWord(5, mockWords);
 
         expect(result).toHaveLength(5)
-        
+
     });
 
+    it('displays an error message if a word of that length does not exist', () => {
+        const result = generateRandomWord(2, mockWords);
+        const expectedResult = 'A word of that length is not in the list, try again.';
+
+        expect(result).toEqual(expectedResult);
+    });
 });
