@@ -4,32 +4,54 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import axios from "axios";
 import TextInput from "./components/GUI/TextInput.jsx";
-import WordLengthInput from "./components//GUI/WordLenghtInput.jsx";
-import UniqueWordInputs from "./components/GUI/UniqueWordInput.jsx";
+import WordLengthInput from "./components/GUI/WordLengthInput.jsx";
+import UniqueWordInput from "./components/GUI/UniqueWordInput.jsx";
 
 function App() {
-  const [input, setInput] = useState("");
-  const [wordLength, setWordLength] = useState("Random");
-  const [isChecked, setIsChecked] = useState(false);
+  const [gameSettings, setGameSettings] = useState({
+    guesses: [],
+    isUnique: false,
+    wordLength: 5,
+  });
 
   return (
-    <>
+    <main>
       <h1>Wordle</h1>
-      <div>
+      <p>Unique: {gameSettings.isUnique ? 'True' : 'False'}</p>
+      <form>
         <WordLengthInput
-          length={wordLength}
-          onChange={(e) => setWordLength(e.target.value)}
+          currentLength={gameSettings.wordLength}
+          onLengthChange={(newLength) =>
+            setGameSettings(prev => ({ ...prev, wordLength: newLength }))
+          }
         />
         <TextInput
-          value={input}
-          onChange={(e) => setInput(e.target.value.toUpperCase())}
+          wordLength={gameSettings.wordLength}
+          onSubmitGuess={(newGuess) => {
+            setGameSettings(prevSettings => ({
+              ...prevSettings,
+              guesses: [...prevSettings.guesses, newGuess]
+            }));
+          }}
         />
-        <UniqueWordInputs
-          isChecked={isChecked}
-          onChange={() => setIsChecked(!isChecked)}
+
+        <UniqueWordInput
+          currentStatus={gameSettings.isUnique}
+          onToggle={(toggle) => {
+            setGameSettings(prevSettings => ({
+              ...prevSettings,
+              isUnique: toggle
+            }));
+          }}
         />
-      </div>
-    </>
+
+        <ul>
+          {gameSettings.guesses.map((guess, index) => (
+            <li key={index}>{guess}</li>
+          ))}
+        </ul>
+      </form>
+    </main>
   );
 }
 

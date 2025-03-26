@@ -1,23 +1,24 @@
-import { TextField, FormControl, FormLabel } from "@mui/material";
+import { useState } from 'react';
 
-export default function TextInput({ value, onChange }) {
+export default function TextInput({ wordLength, onSubmitGuess }) {
+    const [guess, setGuess] = useState("");
+    const [error, setError] = useState(false);
+
     return (
-        <FormControl>
-            <FormLabel sx={{ mb: 1, color: "white", textAlign: "center" }}>
-                Guess Word
-            </FormLabel>
-            <TextField
-                value={value}
-                onChange={onChange}
-                variant="filled"
-                inputProps={{ min: 0, style: { textAlign: "center", color: "black" } }}
-                sx={{
-                    width: "20rem",
-                    textAlign: "center",
-                    backgroundColor: "#f0f0f0",
-                    borderRadius: "5px",
+        <div className="text-input">
+            <label htmlFor="guess-input" className="text-input__label">
+                Guess:
+            </label>
+            <input
+                type="text"
+                id="guess-input"
+                className="text-input__input"
+                value={guess}
+                maxLength={wordLength}
+                onChange={(ev) => {
+                    setGuess(ev.target.value.toUpperCase());
                 }}
             />
-        </FormControl>
+        </div>
     );
 }

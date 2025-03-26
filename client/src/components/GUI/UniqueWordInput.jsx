@@ -1,17 +1,20 @@
-import { Checkbox, FormControl, FormLabel } from "@mui/material";
+export default function UniqueWordInput({ currentStatus, onToggle }) {
+    const handleCheckboxChange = (e) => {
+        onToggle(e.target.checked);
+    };
 
-export default function UniqueWordInput({ isChecked, onChange }) {
     return (
-        <FormControl component="fieldset">
-            {/* Label Above the Checkbox */}
-            <FormLabel sx={{ mb: 1, color: "white", textAlign: "center" }}>
-                Unique Word
-            </FormLabel>
-            <Checkbox
-                checked={isChecked}
-                onChange={onChange}
-                color="primary"
+        <div className="unique-word-input">
+            <label htmlFor="unique-words-checkbox" className="unique-word-input__label">
+                Unique Words
+            </label>
+            <input
+                type="checkbox"
+                id="unique-words-checkbox"
+                className="unique-word-input__checkbox"
+                checked={currentStatus}
+                onChange={handleCheckboxChange}
             />
-        </FormControl>
+        </div>
     );
 }
