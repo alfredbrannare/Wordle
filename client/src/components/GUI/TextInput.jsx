@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function TextInput({ wordLength, onSubmitGuess }) {
-    const [guess, setGuess] = useState("");
-    const [error, setError] = useState(false);
+export default function TextInput({ wordLength, currentGuess, setCurrentGuess }) {
+    const handleChange = (e) => {
+        const inputValue = e.target.value.toUpperCase();
+
+        if (inputValue.length <= wordLength) {
+            setCurrentGuess(inputValue);
+        }
+    };
 
     return (
         <div className="text-input">
@@ -13,12 +18,18 @@ export default function TextInput({ wordLength, onSubmitGuess }) {
                 type="text"
                 id="guess-input"
                 className="text-input__input"
-                value={guess}
+                value={currentGuess}
                 maxLength={wordLength}
-                onChange={(ev) => {
-                    setGuess(ev.target.value.toUpperCase());
-                }}
+                onChange={handleChange}
             />
+            <p className='letter-row'>
+                {currentGuess.split("").map((letter, index) => (
+                    <div key={index} className='letter-box'>
+                        <span>{letter}</span>
+                    </div>
+                ))}
+            </p>
+
         </div>
     );
 }
