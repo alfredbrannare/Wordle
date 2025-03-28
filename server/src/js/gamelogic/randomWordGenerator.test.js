@@ -1,7 +1,7 @@
 import { it, describe, expect } from '@jest/globals';
 
 import { generateRandomWord } from "./randomWordGenerator.js";
-import { mockWords } from './wordstorage/mockWordData.js';
+import { mockWords } from '../wordstorage/mockWordData.js';
 
 /**
  * Test strategy for the generateRandomWord-function:
