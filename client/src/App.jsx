@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import axios from "axios";
-import TextInput from "./components/GUI/TextInput.jsx";
 import WordLengthInput from "./components/GUI/WordLengthInput.jsx";
 import UniqueWordInput from "./components/GUI/UniqueWordInput.jsx";
+import TextInput from "./components/GUI/TextInput.jsx";
+import SubmitGuess from "./components/GUI/SubmitGuess.jsx";
+import Row from "./components/GUI/Row.jsx";
+import StartGame from "./components/api/StartGame.jsx";
 
 function App() {
   const [gameSettings, setGameSettings] = useState({
@@ -13,26 +13,28 @@ function App() {
     isUnique: false,
     wordLength: 5,
   });
+  const [currentGuess, setCurrentGuess] = useState("");
+  const [correctWord, setCorrectWord] = useState("");
 
   return (
     <main>
+      <StartGame
+        isUnique={gameSettings.isUnique}
+        wordLength={gameSettings.wordLength}
+        onStartGame={(randomWord) => {
+          setCorrectWord(randomWord)
+        }}
+      />
+
       <h1>Wordle</h1>
       <p>Unique: {gameSettings.isUnique ? 'True' : 'False'}</p>
-      <form>
+
+      <div className="game-controls">
         <WordLengthInput
           currentLength={gameSettings.wordLength}
           onLengthChange={(newLength) =>
-            setGameSettings(prev => ({ ...prev, wordLength: newLength }))
+            setGameSettings(prevSettings => ({ ...prevSettings, wordLength: newLength }))
           }
-        />
-        <TextInput
-          wordLength={gameSettings.wordLength}
-          onSubmitGuess={(newGuess) => {
-            setGameSettings(prevSettings => ({
-              ...prevSettings,
-              guesses: [...prevSettings.guesses, newGuess]
-            }));
-          }}
         />
 
         <UniqueWordInput
@@ -45,12 +47,29 @@ function App() {
           }}
         />
 
-        <ul>
-          {gameSettings.guesses.map((guess, index) => (
-            <li key={index}>{guess}</li>
-          ))}
-        </ul>
-      </form>
+        <TextInput
+          wordLength={gameSettings.wordLength}
+          currentGuess={currentGuess}
+          setCurrentGuess={setCurrentGuess}
+        />
+
+        <SubmitGuess
+          currentGuess={currentGuess}
+          setGameSettings={setGameSettings}
+          setCurrentGuess={setCurrentGuess}
+        />
+      </div>
+
+      <Row
+        wordLength={gameSettings.wordLength}
+        guesses={gameSettings.guesses}
+      />
+
+      <ul>
+        {gameSettings.guesses.map((guess, index) => (
+          <li key={index}>{guess}</li>
+        ))}
+      </ul>
     </main>
   );
 }
