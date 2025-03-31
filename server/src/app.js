@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import apiRoutes from './routes/routes.js'
+import createRoutes from './routes/routes.js';
 
-function initApp() {
+function initApp(api) {
     const app = express();
 
     const corsOptions = {
@@ -11,7 +12,7 @@ function initApp() {
 
     app.use(cors(corsOptions));
     app.use(express.json());
-    app.use('/api', apiRoutes);
+    app.use('/api', createRoutes(api));
 
     return app;
 }

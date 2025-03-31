@@ -1,10 +1,11 @@
 import express from 'express';
 import fruitsRoutes from './fruits.js';
-import wordleRoutes from './randomWord.js'
+import createWordleRoutes from './randomWord.js';
 
-const router = express.Router();
+export default function createRoutes(api) {
+    const router = express.Router();
 
-router.use('/fruits', fruitsRoutes);
-router.use('/random-word', wordleRoutes)
+    router.use('/random-word', createWordleRoutes(api));
 
-export default router;
+    return router;
+}
