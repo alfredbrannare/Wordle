@@ -1,11 +1,12 @@
 import express from 'express';
-import fruitsRoutes from './fruits.js';
 import createWordleRoutes from './randomWord.js';
+import createValidateWordRoutes from './validateWord.js';
 
 export default function createRoutes(api) {
     const router = express.Router();
 
-    router.use('/random-word', createWordleRoutes(api));
+    router.use('/words/random', createWordleRoutes(api));
+    router.use('/guesses', createValidateWordRoutes(api));
 
     return router;
 }
