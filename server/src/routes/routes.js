@@ -1,12 +1,15 @@
 import express from 'express';
 import createWordleRoutes from './randomWord.js';
 import createValidateWordRoutes from './validateWord.js';
+import WordStore from '../js/wordstorage/WordStore.js';
 
 export default function createRoutes(api) {
     const router = express.Router();
 
-    router.use('/words/random', createWordleRoutes(api));
-    router.use('/guesses', createValidateWordRoutes(api));
+    const wordStore = new WordStore();
+
+    router.use('/words/random', createWordleRoutes(api, wordStore));
+    router.use('/guesses', createValidateWordRoutes(api, wordStore));
 
     return router;
 }

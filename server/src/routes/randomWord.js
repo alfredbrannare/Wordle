@@ -1,7 +1,7 @@
 import express from 'express';
 import { generateRandomWord } from '../js/gamelogic/randomWordGenerator.js';
 
-export default function createWordleRoutes(api) {
+export default function createWordleRoutes(api, wordStore) {
     const router = express.Router();
 
     router.post('/', async (req, res) => {
@@ -10,7 +10,6 @@ export default function createWordleRoutes(api) {
 
             const wordsObject = await api.loadWords();
             const words = Object.keys(wordsObject);
-            console.log(words);
 
             const randomWord = generateRandomWord(
                 parseInt(wordLength),
@@ -18,7 +17,9 @@ export default function createWordleRoutes(api) {
                 uniqueWords
             );
 
-            res.json(randomWord);
+            wordStore.setCorrectWord(randomWord);
+            console.log({ correct: randomWord });
+            res.json({ message: "Game started!" });
         } catch (error) {
             console.error('Error generating word:', error);
             res.status(500).json({ error: 'Internal server error' });
