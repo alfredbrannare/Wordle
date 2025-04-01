@@ -56,5 +56,3 @@ export function evaluateGuess(correct, guess) {
 
     return result;
 }
-
-evaluateGuess("CYKLA", "HALLÅa");
