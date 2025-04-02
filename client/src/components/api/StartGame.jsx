@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export default function StartGame({ wordLength, isUnique, onStartGame }) {
-    const FetchRandomWord = async () => {
+    const initGame = async () => {
         try {
             const res = await fetch('/api/words/random', {
                 method: "POST",
@@ -15,8 +15,6 @@ export default function StartGame({ wordLength, isUnique, onStartGame }) {
             });
 
             const payload = await res.json();
-            console.log(payload)
-            onStartGame(payload);
             return payload;
         } catch (error) {
             console.error("Error fetching the word:", error);
@@ -28,7 +26,7 @@ export default function StartGame({ wordLength, isUnique, onStartGame }) {
             type='submit'
             className='start-game__button'
             onClick={async () => {
-                const word = await FetchRandomWord();
+                const word = await initGame();
                 onStartGame(word);
             }}
         >

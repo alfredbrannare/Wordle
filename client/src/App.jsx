@@ -6,28 +6,36 @@ import TextInput from "./components/GUI/TextInput.jsx";
 import SubmitGuess from "./components/GUI/SubmitGuess.jsx";
 import Grid from "./components/GUI/Grid.jsx";
 import StartGame from "./components/api/StartGame.jsx";
+import GameGrid from "./components/GUI/GameGrid.jsx";
+import FetchGuesses from "./components/api/FetchGuesses.jsx";
 
 function App() {
   const [gameSettings, setGameSettings] = useState({
-    guesses: [],
     isUnique: false,
     wordLength: 5,
   });
   const [currentGuess, setCurrentGuess] = useState("");
   const [correctWord, setCorrectWord] = useState("");
+  const [guesses, setGuesses] = useState([]);
+
+  useEffect(() => {
+    async function fetchGuesses() {
+      const res = await fetch('/api/guesses');
+      const data = await res.json();
+      setGuesses(data || []);
+    }
+    fetchGuesses();
+  }, []);
 
   return (
     <main>
       <StartGame
         isUnique={gameSettings.isUnique}
         wordLength={gameSettings.wordLength}
-        onStartGame={(randomWord) => {
-          setCorrectWord(randomWord)
-        }}
+        onStartGame={() => setGuesses([])}
       />
 
       <h1>Wordle</h1>
-
       <div className="game-controls">
         <WordLengthInput
           currentLength={gameSettings.wordLength}
@@ -52,24 +60,21 @@ function App() {
           setCurrentGuess={setCurrentGuess}
         />
 
-      </div>
-
-      <SubmitGuess
-        currentGuess={currentGuess}
-        correctWord={correctWord}
-        setGameSettings={setGameSettings}
-        setCurrentGuess={setCurrentGuess}
-        wordLength={gameSettings.wordLength}
-      />
-      <div className="game-grid">
-        <Grid
-          wordLength={gameSettings.wordLength}
-          guesses={gameSettings.guesses}
+        <SubmitGuess
           currentGuess={currentGuess}
+          wordLength={gameSettings.wordLength}
+          onSuccessfulSubmit={(newGuess) => {
+            setGuesses(prev => [...prev, newGuess]);
+            setCurrentGuess("");
+          }}
         />
       </div>
 
-
+      <div className="game-grid">
+        <GameGrid
+          guesses={guesses}
+        />
+      </div>
     </main>
   );
 }
