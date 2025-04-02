@@ -22,13 +22,13 @@ export default function TextInput({ wordLength, currentGuess, setCurrentGuess })
                 maxLength={wordLength}
                 onChange={handleChange}
             />
-            <p className='letter-row'>
+            <div className='currentGuess__container'>
                 {currentGuess.split("").map((letter, index) => (
-                    <div key={index} className='letter-box'>
+                    <div key={index} className='currentGuess__letter'>
                         <span>{letter}</span>
                     </div>
                 ))}
-            </p>
+            </div>
 
         </div>
     );
