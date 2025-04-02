@@ -97,6 +97,7 @@ function App() {
             <GameGrid
               guesses={guesses}
               wordLength={gameSettings.wordLength}
+              currentGuess={currentGuess}
             />
           </div>
 

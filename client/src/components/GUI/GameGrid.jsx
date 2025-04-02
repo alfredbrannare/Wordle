@@ -1,21 +1,34 @@
-export default function GameGrid({ guesses, wordLength }) {
-    let emptyRows = 5 - guesses.length;
+export default function GameGrid({ guesses, wordLength, currentGuess }) {
     let totalRows = [];
 
     for (let rows = 0; rows < 5; rows++) {
         let row = [];
+        const thisGuess = guesses[rows];
 
-        const currentGuess = guesses[rows];
-
-        for (let col = 0; col < wordLength; col++) {
-            if (currentGuess) {
-                const letterObj = currentGuess[col];
+        if (thisGuess) {
+            for (let col = 0; col < wordLength; col++) {
+                const letterObj = thisGuess[col];
                 row.push(
                     <span key={col} className={`letter-box ${letterObj.result}`}>
                         {letterObj.letter}
                     </span>
                 );
-            } else {
+            }
+        }
+
+        else if (currentGuess && rows === guesses.length) {
+            for (let col = 0; col < wordLength; col++) {
+                const letter = currentGuess[col] || '';
+                row.push(
+                    <span key={col} className={`letter-box ${letter ? 'current' : 'empty'}`}>
+                        {letter}
+                    </span>
+                );
+            }
+        }
+
+        else {
+            for (let col = 0; col < wordLength; col++) {
                 row.push(
                     <span key={col} className="letter-box empty"></span>
                 );
