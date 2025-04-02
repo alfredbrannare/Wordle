@@ -70,6 +70,8 @@ button:focus-visible {
 main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 form {
@@ -115,8 +117,8 @@ input {
 }
 
 .letter-box {
-  width: 40px;
-  height: 40px;
+  width: 5rem;
+  height: 5rem;
   border: 2px solid black;
   display: flex;
   align-items: center;
@@ -126,4 +128,35 @@ input {
   text-transform: uppercase;
   background-color: lightgray;
   color: #1a1a1a;
+}
+
+.correct{
+background-color: #25b431;
+}
+
+.misplaced{
+  background-color: yellow;
+}
+
+.incorrect{
+  background-color: red;
+}
+
+.currentGuess__container{
+  display: flex;
+  margin: 1rem 0;
+  border: 0.1rem solid white;
+  border-radius: 0.5rem;
+}
+
+.game-controls {
+  display: flex;
+}
+
+.grid{
+  width: 50rem;
+}
+
+.start-game__button{
+  width: 20rem;
 }
