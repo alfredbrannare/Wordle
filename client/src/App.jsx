@@ -17,6 +17,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState("");
   const [correctWord, setCorrectWord] = useState("");
   const [guesses, setGuesses] = useState([]);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     async function fetchGuesses() {
@@ -27,54 +28,88 @@ function App() {
     fetchGuesses();
   }, []);
 
+  const handleStartGame = () => {
+    setGuesses([]);
+    setGameStarted(true);
+  };
+
+  const resetGame = () => {
+    setGameStarted(false);
+    setGuesses([]);
+    setCurrentGuess("");
+  };
+
   return (
     <main>
-      <StartGame
-        isUnique={gameSettings.isUnique}
-        wordLength={gameSettings.wordLength}
-        onStartGame={() => setGuesses([])}
-      />
-
       <h1>Wordle</h1>
-      <div className="game-controls">
-        <WordLengthInput
-          currentLength={gameSettings.wordLength}
-          onLengthChange={(newLength) =>
-            setGameSettings(prevSettings => ({ ...prevSettings, wordLength: newLength }))
-          }
-        />
+      {!gameStarted && (
+        <>
+          <div className="game-settings">
+            <WordLengthInput
+              currentLength={gameSettings.wordLength}
+              onLengthChange={(newLength) =>
+                setGameSettings(prevSettings => ({ ...prevSettings, wordLength: newLength }))
+              }
+              disabled={gameStarted}
+            />
 
-        <UniqueWordInput
-          currentStatus={gameSettings.isUnique}
-          onToggle={(toggle) => {
-            setGameSettings(prevSettings => ({
-              ...prevSettings,
-              isUnique: toggle
-            }));
-          }}
-        />
+            <UniqueWordInput
+              currentStatus={gameSettings.isUnique}
+              onToggle={(toggle) => {
+                setGameSettings(prevSettings => ({
+                  ...prevSettings,
+                  isUnique: toggle
+                }));
+              }}
+              disabled={gameStarted}
+            />
 
-        <TextInput
-          wordLength={gameSettings.wordLength}
-          currentGuess={currentGuess}
-          setCurrentGuess={setCurrentGuess}
-        />
+            <StartGame
+              isUnique={gameSettings.isUnique}
+              wordLength={gameSettings.wordLength}
+              onStartGame={handleStartGame}
+            />
+          </div>
+        </>
+      )}
 
-        <SubmitGuess
-          currentGuess={currentGuess}
-          wordLength={gameSettings.wordLength}
-          onSuccessfulSubmit={(newGuess) => {
-            setGuesses(prev => [...prev, newGuess]);
-            setCurrentGuess("");
-          }}
-        />
-      </div>
 
-      <div className="game-grid">
-        <GameGrid
-          guesses={guesses}
-        />
-      </div>
+      {gameStarted && (
+        <>
+          <div className="game-controls">
+            <TextInput
+              wordLength={gameSettings.wordLength}
+              currentGuess={currentGuess}
+              setCurrentGuess={setCurrentGuess}
+            />
+
+            <SubmitGuess
+              currentGuess={currentGuess}
+              wordLength={gameSettings.wordLength}
+              onSuccessfulSubmit={(newGuess) => {
+                setGuesses(prev => [...prev, newGuess]);
+                setCurrentGuess("");
+              }}
+            />
+          </div>
+
+          <div className="game-grid">
+            <GameGrid
+              guesses={guesses}
+              wordLength={gameSettings.wordLength}
+            />
+          </div>
+
+          <div className="reset-container">
+            <button
+              className="reset-button"
+              onClick={resetGame}
+            >
+              Reset Game
+            </button>
+          </div>
+        </>
+      )}
     </main>
   );
 }
