@@ -1,6 +1,7 @@
 export default class WordStore {
     constructor() {
         this.correctWord = null;
+        this.guesses = [];
     }
 
     setCorrectWord(word) {
@@ -10,5 +11,13 @@ export default class WordStore {
 
     getCorrectWord() {
         return this.correctWord;
+    }
+
+    setGuess(guess) {
+        this.guesses.push(guess);
+    }
+
+    getGuesses() {
+        return this.guesses;
     }
 }
