@@ -34,7 +34,7 @@ export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubm
         <button
             type="button"
             onClick={handleSubmit}
-            className="submit-guess-button"
+            className="btn btn-outline btn-success my-4"
         >
             Guess
         </button>

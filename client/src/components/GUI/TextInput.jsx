@@ -10,19 +10,16 @@ export default function TextInput({ wordLength, currentGuess, setCurrentGuess })
     };
 
     return (
-        <div className="text-input">
-            <label htmlFor="guess-input" className="text-input__label">
-                Guess:
-            </label>
+        <div className="text-input mt-7">
             <input
                 type="text"
                 id="guess-input"
-                className="text-input__input"
+                className="input text-center py-4"
                 value={currentGuess}
                 maxLength={wordLength}
+                placeholder={`Enter a guess of ${wordLength} words`}
                 onChange={handleChange}
             />
-
         </div>
     );
 }

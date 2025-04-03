@@ -4,14 +4,14 @@ export default function UniqueWordInput({ currentStatus, onToggle }) {
     };
 
     return (
-        <div className="unique-word-input">
+        <div className="flex flex-col items-center justify-center my-4">
             <label htmlFor="unique-words-checkbox" className="unique-word-input__label">
                 Unique Words
             </label>
             <input
                 type="checkbox"
                 id="unique-words-checkbox"
-                className="unique-word-input__checkbox"
+                className="toggle toggle-success my-1"
                 checked={currentStatus}
                 onChange={handleCheckboxChange}
             />

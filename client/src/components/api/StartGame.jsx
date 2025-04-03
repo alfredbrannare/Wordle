@@ -22,15 +22,17 @@ export default function StartGame({ wordLength, isUnique, onStartGame }) {
     }
 
     return (
-        <button
-            type='submit'
-            className='start-game__button'
-            onClick={async () => {
-                const word = await initGame();
-                onStartGame(word);
-            }}
-        >
-            Start Game
-        </button>
+        <div className='flex justify-center items-center'>
+            <button
+                type='submit'
+                className='btn btn-xl btn-outline btn-success'
+                onClick={async () => {
+                    const word = await initGame();
+                    onStartGame(word);
+                }}
+            >
+                Start Game
+            </button>
+        </div>
     )
 }
