@@ -20,4 +20,8 @@ export default class WordStore {
     getGuesses() {
         return this.guesses;
     }
+
+    clearGuesses() {
+        this.guesses = [];
+    }
 }

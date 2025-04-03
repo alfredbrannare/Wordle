@@ -38,5 +38,14 @@ export default function createValidateWordRoutes(api, wordStore) {
         }
     });
 
+    router.delete('/', (req, res) => {
+        try {
+            wordStore.clearGuesses();
+            res.status(200).json({ message: 'Game reset successfully' });
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    })
+
     return router;
 }
