@@ -6,7 +6,7 @@
   }
   
   .letter-box.incorrect {
-    @apply bg-error text-error-content border-error;
+    background-color: rgb(236, 56, 56);
   }
   
   .letter-box.misplaced {
