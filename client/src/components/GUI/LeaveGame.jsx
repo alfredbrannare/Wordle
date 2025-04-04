@@ -1,7 +1,11 @@
-export default function LeaveGame({ setLeaveGame, resetGame, setGameRestart }) {
+export default function LeaveGame({ setLeaveGame, resetGame, pendingNavigation, setPendingNavigation }) {
     const handleReset = async () => {
         try {
             await resetGame();
+            if (pendingNavigation) {
+                window.location.href = pendingNavigation;
+                setPendingNavigation(null);
+            }
         } catch (error) {
             console.error("Error resetting game:", error);
         }
@@ -21,10 +25,7 @@ export default function LeaveGame({ setLeaveGame, resetGame, setGameRestart }) {
                         No
                     </button>
                     <button
-                        onClick={async () => {
-                            await handleReset();
-                            setLeaveGame(false);
-                        }}
+                        onClick={handleReset}
                         className="btn btn-dash btn-warning"
                     >
                         Yes

@@ -28,6 +28,7 @@ function App() {
   const [attemptsCount, setAttemptsCount] = useState(0);
   const [gameRestart, setGameRestart] = useState(false);
   const [leaveGame, setLeaveGame] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState(null);
 
   const handleWin = (attempts) => {
     setAttemptsCount(attempts);
@@ -64,6 +65,7 @@ function App() {
       <NavBar
         gameStarted={gameStarted}
         setLeaveGame={setLeaveGame}
+        setPendingNavigation={setPendingNavigation}
       />
       <main className="flex flex-col items-center justify-center min-h-screen bg-base-200">
         <h1 className="text-5xl font-bold text-success">Wordle</h1>
@@ -163,6 +165,8 @@ function App() {
             setGameWon={setGameWon}
             resetGame={resetGame}
             setLeaveGame={setLeaveGame}
+            pendingNavigation={pendingNavigation}
+            setPendingNavigation={setPendingNavigation}
           />
         )}
       </main>

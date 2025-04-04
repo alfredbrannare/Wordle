@@ -1,8 +1,9 @@
-export default function NavBar({ gameStarted, setLeaveGame }) {
-    const handleLeaveGame = (event) => {
+export default function NavBar({ gameStarted, setLeaveGame, setPendingNavigation }) {
+    const handleLeaveGame = (event, href) => {
         if (gameStarted) {
             event.preventDefault();
             setLeaveGame(true);
+            setPendingNavigation(href);
         }
     };
 
@@ -17,29 +18,26 @@ export default function NavBar({ gameStarted, setLeaveGame }) {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         <li><a href="about"
-                            onClick={handleLeaveGame}
+                            onClick={(e) => handleLeaveGame(e, "/about")}
                         >About Project</a></li>
                         <li><a href="highscores"
-                            onClick={handleLeaveGame}
+                            onClick={(e) => handleLeaveGame(e, "/highscores")}
                         >Highscores</a></li>
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl" href="/"
-                    onClick={handleLeaveGame}
+                    onClick={(e) => handleLeaveGame(e, "/")}
                 >Wordle</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     <li><a href="/about"
-                        onClick={handleLeaveGame}
+                        onClick={(e) => handleLeaveGame(e, "/about")}
                     >About Project</a></li>
                     <li><a href="highscores"
-                        onClick={handleLeaveGame}
+                        onClick={(e) => handleLeaveGame(e, "/highscores")}
                     >Highscores</a></li>
                 </ul>
-            </div>
-            <div className="navbar-end">
-                <a className="btn btn-primary" href="/">Play Game</a>
             </div>
         </div>
     )
