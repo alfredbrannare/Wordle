@@ -1,13 +1,6 @@
-export default function ResetIcon({ resetGame }) {
+export default function ResetIcon({ resetGame, setGameRestart }) {
     const handleReset = async () => {
-        try {
-            const shouldReset = window.confirm("Are you sure you want to reset the game?");
-            if (shouldReset) {
-                await resetGame();
-            }
-        } catch (error) {
-            console.error("Error resetting game:", error);
-        }
+        setGameRestart(true)
     };
 
     return (

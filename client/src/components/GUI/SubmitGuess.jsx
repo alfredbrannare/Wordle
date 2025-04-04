@@ -1,4 +1,4 @@
-export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubmit }) {
+export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubmit, onWin }) {
     const handleSubmit = async (e) => {
         if (currentGuess.length !== wordLength) {
             console.log('Nope');
@@ -21,6 +21,14 @@ export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubm
 
             if (payload && typeof onSuccessfulSubmit === 'function') {
                 onSuccessfulSubmit(payload[payload.length - 1]);
+
+                const latestGuess = payload[payload.length - 1];
+                const isCorrect = latestGuess.every(letter => letter.result === 'correct');
+                const attempts = payload.length;
+
+                if (isCorrect && attempts <= 5 && typeof onWin === 'function') {
+                    onWin(attempts);
+                }
             }
 
             return payload;
