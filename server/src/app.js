@@ -1,13 +1,29 @@
 import express from 'express';
 import createApiRoutes from './routes/routes.js';
+import fs from 'fs/promises'
 
 function initApp(api) {
     const app = express();
 
     app.use(express.json());
-    app.use('/', createApiRoutes(api));
-    app.use(express.static('client/public'));
+    app.use('/api', createApiRoutes(api));
 
+    app.get("/about", async (req, res) => {
+        const htmlText = await fs.readFile("../client/public/about-project.html");
+        res.send(htmlText.toString());
+    });
+
+    app.get("/highscores", async (req, res) => {
+        try {
+            const template = await fs.readFile("./src/views/highscores.html");
+            res.send(template);
+        } catch (err) {
+            console.error("Full error:", err);
+            res.status(500).send(`Error loading highscores. Path tried: ${err.path}`);
+        }
+    });
+
+    app.use(express.static('client/public'));
     return app;
 }
 
