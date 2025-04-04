@@ -13,6 +13,7 @@ import GameWon from "./components/GUI/GameWon.jsx";
 import ResetIcon from "./components/GUI/ResetIcon.jsx";
 import GameLost from "./components/GUI/GameLost.jsx";
 import RestartGame from "./components/GUI/RestartGame.jsx";
+import LeaveGame from "./components/GUI/LeaveGame.jsx";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [attemptsCount, setAttemptsCount] = useState(0);
   const [gameRestart, setGameRestart] = useState(false);
+  const [leaveGame, setLeaveGame] = useState(false);
 
   const handleWin = (attempts) => {
     setAttemptsCount(attempts);
@@ -59,7 +61,10 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar
+        gameStarted={gameStarted}
+        setLeaveGame={setLeaveGame}
+      />
       <main className="flex flex-col items-center justify-center min-h-screen bg-base-200">
         <h1 className="text-5xl font-bold text-success">Wordle</h1>
         {!gameStarted && (
@@ -150,6 +155,14 @@ function App() {
             setGameWon={setGameWon}
             resetGame={resetGame}
             setGameRestart={setGameRestart}
+          />
+        )}
+
+        {leaveGame && (
+          <LeaveGame
+            setGameWon={setGameWon}
+            resetGame={resetGame}
+            setLeaveGame={setLeaveGame}
           />
         )}
       </main>
