@@ -13,6 +13,8 @@ export default function WordLengthInput({ currentLength, onLengthChange }) {
                 id="word-length"
                 className="input input-bordered border w-full max-w-xs text-center my-1"
                 value={localLength}
+                min={0}
+                max={25}
                 onChange={(e) => {
                     const newLength = parseInt(e.target.value, 10) || 0;
                     setLocalLength(newLength);
