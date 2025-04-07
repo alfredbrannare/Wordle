@@ -8,7 +8,12 @@ function initApp(api) {
 
     app.use('/api', createApiRoutes(api));
 
-    app.get("/about", async (req, res) => {
+    app.get('/', async (req, res) => {
+        const htmlText = await fs.readFile('../client/dist/index.html');
+        res.send(htmlText.toString());
+    });
+
+    app.get('/about', async (req, res) => {
         const htmlText = await fs.readFile("../client/public/about-project.html");
         res.send(htmlText.toString());
     });
@@ -22,6 +27,7 @@ function initApp(api) {
     });
 
     app.use(express.static('client/public'));
+    app.use('/assets', express.static('../client/dist/assets'));
     return app;
 }
 
