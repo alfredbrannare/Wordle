@@ -26,8 +26,8 @@ function initApp(api) {
         }
     });
 
-    app.use(express.static('client/public'));
     app.use('/assets', express.static('../client/dist/assets'));
+
     return app;
 }
 
