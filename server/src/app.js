@@ -29,9 +29,9 @@ function initApp(api) {
         }
     });
 
-    app.post('/highscore', async (req, res) => {
+    app.post('/api/highscore', async (req, res) => {
         try {
-            const { name, guesses, timeTaken } = req.body;
+            const { name, guesses, time } = req.body;
 
             if (!name || !guesses) {
                 return res.status(400).send('Name and score are required');
@@ -40,7 +40,7 @@ function initApp(api) {
             const newScore = new HighScoreModel({
                 name,
                 guesses,
-                timeTaken
+                time
             });
 
             await newScore.save();

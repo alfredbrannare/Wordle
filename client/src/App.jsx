@@ -14,6 +14,7 @@ import ResetIcon from "./components/GUI/ResetIcon.jsx";
 import GameLost from "./components/GUI/GameLost.jsx";
 import RestartGame from "./components/GUI/RestartGame.jsx";
 import LeaveGame from "./components/GUI/LeaveGame.jsx";
+import { submitHighscore } from "./components/api/SubmitHighscore.jsx";
 
 
 function App() {
@@ -147,6 +148,7 @@ function App() {
             timeTaken={timeTaken}
             setGameWon={setGameWon}
             resetGame={resetGame}
+            submitHighscore={submitHighscore}
           />
         )}
 
@@ -154,6 +156,7 @@ function App() {
           <GameLost
             setGameWon={setGameWon}
             resetGame={resetGame}
+
           />
         )}
 

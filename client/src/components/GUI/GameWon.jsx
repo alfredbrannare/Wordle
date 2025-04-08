@@ -1,8 +1,21 @@
-export default function GameWon({ attemptsCount, timeTaken, setGameWon, resetGame }) {
+import { useState } from "react";
+
+export default function GameWon({ attemptsCount, timeTaken, setGameWon, resetGame, submitHighscore }) {
+    const [username, setUsername] = useState('');
+
     const handleClose = async () => {
         await resetGame();
         setGameWon(false);
     };
+
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault()
+            await submitHighscore({ name: username, guesses: attemptsCount, time: timeTaken })
+        } catch (error) {
+            console.error('Error submitting high score:', error);
+        }
+    }
 
     return (
         <div className="modal modal-open">
@@ -15,8 +28,18 @@ export default function GameWon({ attemptsCount, timeTaken, setGameWon, resetGam
                 <div className="modal-action mt-auto flex flex-row justify-between items-end">
                     <div className="flex flex-col">
                         <p>Submit your result!</p>
-                        <input placeholder="Enter username" className="input input-bordered my-1" />
-                        <button type="submit" className="btn btn-success">Post</button>
+                        <input
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Enter username"
+                            className="input input-bordered my-1" />
+                        <button
+                            onClick={handleSubmit}
+                            type="submit"
+                            className="btn btn-success"
+                        >
+                            Post
+                        </button>
                     </div>
                     <button
                         onClick={handleClose}
