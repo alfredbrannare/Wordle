@@ -1,4 +1,4 @@
-export default function GameLost({ setGameWon, resetGame }) {
+export default function GameLost({ setGameWon, resetGame, correctWord }) {
     const handleClose = async () => {
         await resetGame();
         setGameWon(false);
@@ -11,6 +11,7 @@ export default function GameLost({ setGameWon, resetGame }) {
                 <p className="py-4">
                     You did not guess the correct word...
                 </p>
+                <p>The correct word was <strong>{correctWord}</strong>.</p>
                 <div className="modal-action">
                     <button
                         onClick={() => {

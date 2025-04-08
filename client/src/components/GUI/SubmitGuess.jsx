@@ -1,7 +1,6 @@
-export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubmit, onWin }) {
+export default function SubmitGuess({ setCorrectWord, gameWon, currentGuess, wordLength, onSuccessfulSubmit, onWin }) {
     const handleSubmit = async (e) => {
         if (currentGuess.length !== wordLength) {
-            console.log('Nope');
             return;
         }
 
@@ -9,7 +8,8 @@ export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubm
             const res = await fetch('/api/guesses', {
                 method: "POST",
                 body: JSON.stringify({
-                    guessWord: currentGuess
+                    guessWord: currentGuess,
+                    gameState: gameWon
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
@@ -17,17 +17,24 @@ export default function SubmitGuess({ currentGuess, wordLength, onSuccessfulSubm
             });
 
             const payload = await res.json();
-            console.log("Received payload:", payload);
 
-            if (payload && typeof onSuccessfulSubmit === 'function') {
-                onSuccessfulSubmit(payload[payload.length - 1]);
+            if (payload) {
+                const guessesArray = payload.guesses || payload;
 
-                const latestGuess = payload[payload.length - 1];
-                const isCorrect = latestGuess.every(letter => letter.result === 'correct');
-                const attempts = payload.length;
+                if (typeof onSuccessfulSubmit === 'function') {
+                    onSuccessfulSubmit(guessesArray[guessesArray.length - 1]);
 
-                if (isCorrect && attempts <= 5 && typeof onWin === 'function') {
-                    onWin(attempts);
+                    const latestGuess = guessesArray[guessesArray.length - 1];
+                    const isCorrect = latestGuess.every(letter => letter.result === 'correct');
+                    const attempts = guessesArray.length;
+
+                    if (isCorrect && attempts <= 5 && typeof onWin === 'function') {
+                        onWin(attempts);
+                    }
+
+                    if (payload.correctWord) {
+                        setCorrectWord(payload.correctWord);
+                    }
                 }
             }
 

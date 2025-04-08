@@ -32,6 +32,7 @@ function App() {
   const [pendingNavigation, setPendingNavigation] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [timeTaken, setTimeTaken] = useState(null);
+  const [correctWord, setCorrectWord] = useState('');
 
   const handleWin = (attempts) => {
     setAttemptsCount(attempts);
@@ -116,6 +117,8 @@ function App() {
               />
 
               <SubmitGuess
+                setCorrectWord={setCorrectWord}
+                gameWon={gameWon}
                 currentGuess={currentGuess}
                 wordLength={gameSettings.wordLength}
                 onSuccessfulSubmit={(newGuess) => {
@@ -149,6 +152,7 @@ function App() {
             setGameWon={setGameWon}
             resetGame={resetGame}
             submitHighscore={submitHighscore}
+            correctWord={correctWord}
           />
         )}
 
@@ -156,7 +160,7 @@ function App() {
           <GameLost
             setGameWon={setGameWon}
             resetGame={resetGame}
-
+            correctWord={correctWord}
           />
         )}
 

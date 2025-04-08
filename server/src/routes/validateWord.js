@@ -6,7 +6,7 @@ export default function createValidateWordRoutes(api, wordStore) {
 
     router.post('/', async (req, res) => {
         try {
-            const { guessWord } = req.body;
+            const { guessWord, gameState } = req.body;
             const correctWord = wordStore.getCorrectWord();
 
             if (!correctWord) {
@@ -21,10 +21,18 @@ export default function createValidateWordRoutes(api, wordStore) {
             console.log('Validation result:', validateWord);
             wordStore.setGuess(validateWord);
 
-            res.json(wordStore.getGuesses());
+            const allGuesses = wordStore.getGuesses();
+            const isWon = validateWord.every(letter => letter.result === 'correct');
+            const isLost = allGuesses.length >= 5 && !isWon;
+
+            if (isWon || isLost) {
+                return res.json({ guesses: allGuesses, correctWord });
+            } else {
+                return res.json(allGuesses);
+            }
         } catch (error) {
             console.error('Failed to validate word:', error);
-            res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({ error: 'Internal server error' });
         }
     });
 

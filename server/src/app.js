@@ -31,16 +31,17 @@ function initApp(api) {
 
     app.post('/api/highscore', async (req, res) => {
         try {
-            const { name, guesses, time } = req.body;
+            const { name, guesses, time, word } = req.body;
 
-            if (!name || !guesses) {
+            if (!name || !guesses || !time || !word) {
                 return res.status(400).send('Name and score are required');
             }
 
             const newScore = new HighScoreModel({
                 name,
                 guesses,
-                time
+                time,
+                word
             });
 
             await newScore.save();
