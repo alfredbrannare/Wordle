@@ -29,10 +29,13 @@ function App() {
   const [gameRestart, setGameRestart] = useState(false);
   const [leaveGame, setLeaveGame] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [timeTaken, setTimeTaken] = useState(null);
 
   const handleWin = (attempts) => {
     setAttemptsCount(attempts);
     setGameWon(true);
+    setTimeTaken(Date.now() - startTime);
   };
 
   useEffect(() => {
@@ -46,6 +49,7 @@ function App() {
 
   const handleStartGame = async () => {
     await resetGame();
+    setStartTime(Date.now());
     setGameStarted(true);
   };
 
@@ -140,6 +144,7 @@ function App() {
         {gameWon && (
           <GameWon
             attemptsCount={attemptsCount}
+            timeTaken={timeTaken}
             setGameWon={setGameWon}
             resetGame={resetGame}
           />
