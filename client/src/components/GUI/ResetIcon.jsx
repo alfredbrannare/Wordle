@@ -14,7 +14,7 @@ export default function ResetIcon({ resetGame, setGameRestart }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="#00d3bb"
-                className="size-6"
+                className="size-6 hover:shadow-[0_4px_25px_rgba(0,211,187,0.31)] transition-all duration-300"
             >
                 <path
                     fillRule="evenodd"

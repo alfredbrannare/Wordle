@@ -25,7 +25,7 @@ export default function StartGame({ wordLength, isUnique, onStartGame }) {
         <div className='flex justify-center items-center'>
             <button
                 type='submit'
-                className='btn btn-xl btn-outline btn-success'
+                className='btn btn-xl btn-outline text-success border-success shadow-[0_1px_15px_rgba(0,211,187,0.31)] hover:shadow-[0_1px_25px_rgba(0,211,187,0.31)] transition-all duration-300'
                 onClick={async () => {
                     const word = await initGame();
                     onStartGame(word);

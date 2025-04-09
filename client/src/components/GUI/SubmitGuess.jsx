@@ -49,7 +49,7 @@ export default function SubmitGuess({ setCorrectWord, gameWon, currentGuess, wor
         <button
             type="button"
             onClick={handleSubmit}
-            className="btn btn-outline btn-success my-4"
+            className="btn btn-outline btn-success my-4 hover:shadow-[0_4px_25px_rgba(0,211,187,0.31)] transition-all duration-300"
         >
             Guess
         </button>

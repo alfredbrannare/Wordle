@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+.letter-box{
+  box-shadow: 0 4px 20px rgba(255, 0, 255, 0.2);
+}
+
 .letter-box.correct {
     @apply bg-success text-success-content border-success;
   }

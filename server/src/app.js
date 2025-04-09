@@ -8,6 +8,7 @@ import HighScoreModel from './models/highscore.js'
 function initApp(api) {
     const app = express();
     app.use(express.json());
+    app.set('view engine', 'ejs');
 
     app.use('/api', createApiRoutes(api));
 
@@ -23,9 +24,10 @@ function initApp(api) {
 
     app.get('/highscores', async (req, res) => {
         try {
-            res.render('highscores.ejs');
+            const leaderboard = await HighScoreModel.find()
+            res.render('highscores.ejs', { highscores: leaderboard });
         } catch (err) {
-            res.status(500).send("Error loading highscores");
+            res.status(500).send("Error loading leaderboard");
         }
     });
 
@@ -54,6 +56,8 @@ function initApp(api) {
     });
 
     app.use('/assets', express.static('../client/dist/assets'));
+    app.use('/css', express.static('../server/src/css'));
+    app.use('/src', express.static('../client/public/src'));
 
     return app;
 }

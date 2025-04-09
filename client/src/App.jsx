@@ -74,10 +74,10 @@ function App() {
         setPendingNavigation={setPendingNavigation}
       />
       <main className="flex flex-col items-center justify-center min-h-screen bg-base-200">
-        <h1 className="text-5xl font-bold text-success">Wordle</h1>
+        <h1 className="text-5xl font-bold text-[#f72585]">Wordle</h1>
         {!gameStarted && (
           <>
-            <div className="game-settings rounded-box border-4 border p-4 my-7">
+            <div className="game-settings rounded-box border-4 border-[#f72585] border p-4 my-7 shadow-[0_4px_15px_rgba(255,0,255,0.2)]">
               <WordLengthInput
                 currentLength={gameSettings.wordLength}
                 onLengthChange={(newLength) =>

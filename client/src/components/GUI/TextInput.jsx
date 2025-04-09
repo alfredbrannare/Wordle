@@ -14,7 +14,7 @@ export default function TextInput({ wordLength, currentGuess, setCurrentGuess })
             <input
                 type="text"
                 id="guess-input"
-                className="input text-center py-4"
+                className="input text-center py-4 focus:shadow-[0_1px_25px_rgba(0,211,187,0.31)] hover:shadow-[0_1px_25px_rgba(0,211,187,0.31)] transition-all duration-300"
                 value={currentGuess}
                 maxLength={wordLength}
                 placeholder={`Enter a guess of ${wordLength} words`}
