@@ -18,14 +18,31 @@ function initApp(api) {
     });
 
     app.get('/about', async (req, res) => {
-        const htmlText = await fs.readFile("../client/public/about-project.html");
+        const htmlText = await fs.readFile("../client/dist/about-project.html");
         res.send(htmlText.toString());
     });
 
     app.get('/highscores', async (req, res) => {
         try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const skip = (page - 1) * limit;
+
+            const totalItems = await HighScoreModel.countDocuments();
+            const totalPages = Math.ceil(totalItems / limit);
+
             const leaderboard = await HighScoreModel.find()
-            res.render('highscores.ejs', { highscores: leaderboard });
+                .sort({ guesses: 1, time: 1 })
+                .skip(skip)
+                .limit(limit);
+
+            res.render('highscores.ejs', {
+                highscores: leaderboard,
+                currentPage: page,
+                totalPages: totalPages,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            });
         } catch (err) {
             res.status(500).send("Error loading leaderboard");
         }

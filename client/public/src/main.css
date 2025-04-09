@@ -39,6 +39,7 @@ main h1 {
     color: #b5a9f3;
     margin-bottom: 0.5rem;
     position: relative;
+    list-style: none;
   }
   
   main li::before {
