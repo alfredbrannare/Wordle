@@ -10,7 +10,7 @@ export default function Grid({ wordLength, guesses, currentGuess }) {
         for (let column = 0; column < wordLength; column++) {
             const letter = guesses[row] ? guesses[row][column] || "" : "";
             rowBoxes.push(
-                <div key={`${row}-${column}`} className="letter-box shadow-[0_4px_15px_rgba(255,0,255,0.2)]">
+                <div key={`${row}-${column}`} className="letter-box">
                     {letter}
                 </div>);
         }
