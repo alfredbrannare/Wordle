@@ -9,16 +9,17 @@ function initApp(api) {
     const app = express();
     app.use(express.json());
     app.set('view engine', 'ejs');
+    app.set('views', './server/views');
 
     app.use('/api', createApiRoutes(api));
 
     app.get('/', async (req, res) => {
-        const htmlText = await fs.readFile('../client/dist/index.html');
+        const htmlText = await fs.readFile('./client/dist/index.html');
         res.send(htmlText.toString());
     });
 
     app.get('/about', async (req, res) => {
-        const htmlText = await fs.readFile("../client/dist/about-project.html");
+        const htmlText = await fs.readFile("./client/dist/about-project.html");
         res.send(htmlText.toString());
     });
 
@@ -72,9 +73,9 @@ function initApp(api) {
         }
     });
 
-    app.use('/assets', express.static('../client/dist/assets'));
-    app.use('/css', express.static('../server/src/css'));
-    app.use('/src', express.static('../client/public/src'));
+    app.use('/assets', express.static('./client/dist/assets'));
+    app.use('/css', express.static('./server/src/css'));
+    app.use('/src', express.static('./client/public/src'));
 
     return app;
 }
