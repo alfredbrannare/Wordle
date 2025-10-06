@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 
 export default function StartGame({ wordLength, isUnique, onStartGame }) {
+    const [loading, setLoading] = useState(false);
+
     const initGame = async () => {
         try {
+            setLoading(true);
+
             const res = await fetch('/api/words/random', {
                 method: "POST",
                 body: JSON.stringify({
@@ -18,20 +22,25 @@ export default function StartGame({ wordLength, isUnique, onStartGame }) {
             return payload;
         } catch (error) {
             console.error("Error fetching the word:", error);
+            setLoading(false);
         }
     }
 
     return (
         <div className='flex justify-center items-center'>
+
             <button
                 type='submit'
+                disabled={loading}
                 className='btn btn-xl btn-outline text-success border-success shadow-[0_1px_15px_rgba(0,211,187,0.31)] hover:shadow-[0_1px_25px_rgba(0,211,187,0.31)] transition-all duration-300'
                 onClick={async () => {
                     const word = await initGame();
                     onStartGame(word);
                 }}
             >
-                Start Game
+                {loading ? (
+                    <span className='loading loading-spinner text-success'>Loading...</span>
+                ) : ('Start Game')}
             </button>
         </div>
     )
